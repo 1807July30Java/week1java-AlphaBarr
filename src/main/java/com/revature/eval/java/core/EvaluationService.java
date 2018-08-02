@@ -1,4 +1,4 @@
-package com.revature.eval.java.core;
+﻿package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
 import java.util.List;
@@ -29,10 +29,29 @@ public class EvaluationService {
 	 * @param phrase
 	 * @return
 	 */
-	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		public String acronym(String phrase) {
+		String Cap = phrase.toUpperCase();
+		StringBuilder phrase1 = new StringBuilder();
+		phrase1.append(Cap.substring(0, 1));
+		
+		
+		String [] acro = Cap.split("");
+			
+		for (int i = 0; i < acro.length; i++) {
+			
+			if ((acro[i].equals(" ")) || (acro[i].equals("-"))) {
+				
+				phrase1.append(acro[i+1]);
+				
+			
+			}
+			
+		}
+		String accronyms = phrase1.toString();
+		return accronyms;
+
 	}
+	
 
 	/**
 	 * 3. Determine if a triangle is equilateral, isosceles, or scalene. An
@@ -84,18 +103,28 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
+			if ((sideOne == sideTwo)&&(sideOne == sideThree)) {
+				return true;
+			}else {
 			// TODO Write an implementation for this method declaration
-			return false;
+			return false;}
 		}
 
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			if ((sideOne == sideTwo)||(sideOne == sideThree)||(sideTwo == sideThree)) {
+				return true;}else {return false;
+			}
+			
+			
 		}
 
 		public boolean isScalene() {
+			if ((sideOne != sideTwo)&&(sideOne != sideThree)&& (sideTwo != sideThree)) {
+				return true;
+			}else {
+			
 			// TODO Write an implementation for this method declaration
-			return false;
+			return false;}
 		}
 
 	}
