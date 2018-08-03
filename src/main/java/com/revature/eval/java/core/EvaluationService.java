@@ -20,7 +20,6 @@ public class EvaluationService {
 		}
 		return new String(reversed);
 	}
-
 	/**
 	 * 2. Convert a phrase to its acronym. Techies love their TLA (Three Letter
 	 * Acronyms)! Help generate some jargon by writing a program that converts a
@@ -145,8 +144,33 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
+		String cap = string.toUpperCase();
+		int[] col = new int[cap.length()];
+		String [] s = cap.split("");
+		for (int i = 0; i < s.length; i++) {
+			if (s[i].contains("A")||s[i].contains("E")||s[i].contains("I")||s[i].contains("O")||s[i].contains("U")||s[i].contains("L")||s[i].contains("N")||s[i].contains("R")||s[i].contains("S")||s[i].contains("T")) {
+				col[i] = 1;
+			}else if (s[i].contains("D")||s[i].contains("G")) {
+				col[i] = 2;		
+			}else if (s[i].contains("B")||s[i].contains("C")||s[i].contains("M")||s[i].contains("P")) {
+				col[i] = 3;
+			}else if (s[i].contains("F")||s[i].contains("H")||s[i].contains("V")||s[i].contains("W")||s[i].contains("Y")) {
+				col[i] = 4;
+			}else if (s[i].contains("K")) {
+				col[i] = 5;
+			}else if (s[i].contains("J")||s[i].contains("X")) {
+				col[i] = 8;
+			}else if (s[i].contains("Q")||s[i].contains("Z")) {
+				col[i] = 10;
+			}
+			
+		}
+		int sum = IntStream.of(col).sum();
+		
+		
+		
 		// TODO Write an implementation for this method declaration
-		return 0;
+		return sum;
 	}
 
 	/**
@@ -181,9 +205,38 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+
+		
+		
+		String trim = string.trim().toUpperCase();
+		
+		StringBuilder num = new StringBuilder();
+		String[] sp = trim.split("");
+		int i = 0;
+		if (sp[0].equals("+")&& (sp[1].equals("1"))) {
+			 sp[0]="";
+			 sp[1]="";
+		}
+		
+		for ( i = 0; i < sp.length; i++) {
+			if (sp[i].equals("(")||(sp[i].equals("+")&&(sp[i+1].equals("1")))||sp[i].equals(")")||sp[i].equals(" ")||sp[i].equals(")")||sp[i].equals(".")||sp[i].equals("-")) {
+				num.append("");
+				
+			}else {
+				num.append(sp[i]);
+			}
+			
+		}
+		String phone = num.toString();
+		System.out.println(phone);
+
+			if (phone.length()>10 || phone.contains("\\d+")) {
+				throw new java.lang.IllegalArgumentException();
+			}
+			
+		return phone;
 	}
+
 
 	/**
 	 * 6. Given a phrase, count the occurrences of each word in that phrase.
