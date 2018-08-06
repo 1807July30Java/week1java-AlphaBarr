@@ -1,8 +1,12 @@
 ﻿package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class EvaluationService {
 
@@ -248,8 +252,25 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		Map<String, Integer> wCount = new HashMap<String, Integer>();
+		ArrayList <String> aL = new ArrayList<>();
+		
+		String[]st = string.split("\\s*(=>|,|\\s)\\s*");
+		
+		for (int i = 0; i < st.length; i++) {
+			aL.add(st[i]);
+		}
+		
+		for (String string2 : aL) {
+			
+			if (wCount.containsKey(string2)) {
+				wCount.put(string2, wCount.get(string2)+1);
+			}else {
+				wCount.put(string2, 1);
+			}
+			
+		}
+		return wCount;
 	}
 
 	/**
@@ -328,8 +349,33 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String[] result = new String[string.length()];
+		String[] pigL = string.split(" ");
+		for (int i = 0; i < pigL.length; i++) {
+			StringBuilder test = new StringBuilder(pigL[i]);
+			if (pigL[i].startsWith("a")||pigL[i].startsWith("e")||pigL[i].startsWith("i")||pigL[i].startsWith("o")||pigL[i].startsWith("u")) {
+				test.append("ay");
+				String changed = test.toString();
+				result[i] = changed;}
+				else {
+				StringBuilder test2 = new StringBuilder(pigL[i].substring(1));
+				test2.append(pigL[i].charAt(0));
+				test2.append("ay");
+				String changed = test2.toString();
+				result[i] = changed;
+			}
+		}
+		
+		
+		StringBuilder sb = new StringBuilder();
+		
+		for (int i = 0; i < result.length; i++) {
+			sb.append(result[i]+" ");
+		}
+		String fResult = sb.toString();
+		
+		
+		return fResult;
 	}
 
 	/**
@@ -348,8 +394,33 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		
+		
+		String num = Integer.toString(input);
+		String[] strArr = num.split(""); 
+		Integer [] numArray = new Integer[num.length()];
+		for (int i = 0; i < strArr.length; i++) {
+			int number = 0;
+			try {
+				number = Integer.parseInt(strArr[i]);
+			} catch (NumberFormatException e) {
+			System.out.println("enter correct number");
+			}
+			numArray[i] = number;
+		}
+		int[] eachRaise = new int [numArray.length];
+		for (int i = 0; i < numArray.length; i++) {
+			int sum = (int) Math.pow(numArray[i], (numArray.length));
+			eachRaise[i] = sum;
+		}
+		
+		int armStrong = IntStream.of(eachRaise).sum();
+		if (armStrong == input) {
+			return true;
+		}else {
+			return false;
+		}
+		
 	}
 
 	/**
@@ -362,9 +433,26 @@ public class EvaluationService {
 	 * @param l
 	 * @return
 	 */
-	public List<Long> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
-		return null;
+public List<Long> calculatePrimeFactorsOf(long l) {
+		
+		List<Long> primeList = new ArrayList<>();
+		long number = l;
+
+		System.out.println("The number: " + number);
+		System.out.println("Has prime factors are: ");
+		for (long i = 2; i <= number; i++) {
+            while (number % i == 0) {
+
+                number = number / i;
+                primeList.add(i);
+            }
+        }
+ 
+        if (number < 1)  {
+        	System.out.print(number + ", ");
+        }
+        
+        return primeList;
 	}
 
 	/**
@@ -458,9 +546,33 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
-		}
+			String straar = string.replaceAll("\\W", "").toLowerCase();
+			
+			
+		  	StringBuilder str = new StringBuilder();
+		  	String[] strArr = straar.split("");
+		  	
+		  	
+			String alphaArray ="abcdefghijklmnopqrstuvwxyz";
+			StringBuilder test = new StringBuilder(alphaArray).reverse();
+			String test1 = test.toString();
+
+			
+		    for (int i = 0; i<strArr.length; i++) { 
+		    	if (!strArr[i].matches(".*\\d+.*")) {
+					int index = alphaArray.indexOf(strArr[i]);
+					str.append(test1.charAt(index));
+				}else if (strArr[i].matches(".*\\d+.*") ){
+					str.append(strArr[i]);
+				}
+		   }
+
+		    
+		    String result = str.toString();
+		    String repl = result.replaceAll(".....(?!$)", "$0 ");
+				return repl;
+			}
+			
 
 		/**
 		 * Question 14
@@ -469,9 +581,31 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String decode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
-		}
+			String straar = string.replaceAll("\\W", "").toLowerCase();
+			
+		  	StringBuilder str = new StringBuilder();
+		  	String[] strArr = straar.split("");
+		  	
+		  	
+			String alphaArray ="abcdefghijklmnopqrstuvwxyz";
+			StringBuilder test = new StringBuilder(alphaArray).reverse();
+			String test1 = test.toString();
+
+			
+		    for (int i = 0; i<strArr.length; i++) { 
+		    	if (!strArr[i].matches(".*\\d+.*")) {
+					int index = alphaArray.indexOf(strArr[i]);
+					str.append(test1.charAt(index));
+				}else if (strArr[i].matches(".*\\d+.*") ){
+					str.append(strArr[i]);
+				}
+		   }
+
+		    
+		    String result = str.toString();
+		 
+				return result;
+			}
 	}
 
 	/**
@@ -516,7 +650,16 @@ public class EvaluationService {
 	 */
 	public boolean isPangram(String string) {
 		// TODO Write an implementation for this method declaration
-		return false;
+		String[] sepString = string.split("");
+		String[] alphaArray = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k","l","m","n","o", "p","q","r", "s", "t", "u", "v", "w", "x", "y", "z"};
+		
+		
+		for (int i = 0; i < alphaArray.length; i++) {
+				if (!Arrays.asList(sepString).contains(alphaArray[i])) {
+					return false;
+				}
+		}
+		return true;
 	}
 
 	/**
@@ -546,8 +689,8 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		
+	return 0;
 	}
 
 	/**
